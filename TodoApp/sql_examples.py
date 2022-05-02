@@ -98,7 +98,7 @@ alembic revision -m <message>
 alembic upgrade <revision #> send revision uppgrade to database
 alembic downgrade <revision #> send revision downgrade to database
 
-
+lager da en ALEMBIC mappe, med en alembic ini file
 
 alembic ini file change schlalchemy.url= postgres
 

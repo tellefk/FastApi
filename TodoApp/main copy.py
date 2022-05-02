@@ -5,8 +5,9 @@ import models
 from sqlalchemy.orm import Session
 from pydantic import BaseModel,Field
 from typing import Optional
-from routers.auth import get_current_user,get_user_exception
 from routers import auth
+from routers.auth import get_current_user,get_user_exception
+
 
 
 app=FastAPI()
