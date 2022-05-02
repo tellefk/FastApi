@@ -1,0 +1,4 @@
+{
+    "jupyter.sendSelectionToInteractiveWindow": true,
+    "jupyter.interactiveWindowMode": "single"
+}
