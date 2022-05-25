@@ -1,0 +1,32 @@
+
+{% include 'layout.html' %}
+<div class="container lower">
+    <div class="card">
+        <div class="card-header">
+            Create todo
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="form-group">
+                    <label>title</label>
+                    <input type="text" class="form-control" name="title" required >
+                </div>
+                <div class="form-group">
+                    <label>description</label>
+                    <textarea type="text" class="form-control" rows=5 name="description" required > </textarea>
+                </div>
+                <div class="form-group">
+                    <label>priority</label>
+                    <select class="form-control" name="priority" required >
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" type="submit"> Add new todo</button>
+            </form>
+        </div>
+    </div>
+</div>

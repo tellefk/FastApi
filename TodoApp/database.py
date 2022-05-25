@@ -4,14 +4,13 @@ from sqlalchemy.ext.declarative import declarative_base
 
 
 # SQLALCHEMY_DATABASE_URL = "sqlite:///./todos.db"
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:asdqwe123@localhost/TodoAppDatabase"
+SQLALCHEMY_DATABASE_URL = "postgresql://postgres:Asdqwe123@localhost/geoTest"
 
 """
 for sqlite
 # """
 # engine = create_engine(
-#     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
-# )
+#     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
 
 """
 for postgresql

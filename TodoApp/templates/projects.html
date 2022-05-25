@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type ="text/css" href="{{url_for('static',path='/todo/css/base.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',path='/todo/css/bootstrap.css')}}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>TodoApp</title>
+    <style>
+        .main-colors { background:rgb(180, 180, 218); }
+        .navbar-custom {height:80px}
+        body{
+  font-family: 'Nunito', sans-serif;
+  padding: 50px;
+}
+.card{
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+  padding: 14px 80px 18px 36px;
+  cursor: pointer;
+}
+
+.card:hover{
+     transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+.card h3{
+  font-weight: 600;
+}
+
+.card img{
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  max-height: 120px;
+}
+
+.card-1{
+  background-image: url(https://images.squarespace-cdn.com/content/v1/565c5cc1e4b05079e4c0fcfb/1453378864107-UHN48GK54ILAHH06ANEK/707.jpg?format=1500w);
+      background-repeat: no-repeat;
+    background-position: right;
+    background-size: 80px;
+}
+
+.card-2{
+   background-image: url(https://www.constrofacilitator.com/wp-content/uploads/2021/11/Sheet-Piles.jpg);
+      background-repeat: no-repeat;
+    background-position: right;
+    background-size: 80px;
+}
+
+.card-3{
+   background-image: url(https://ionicframework.com/img/getting-started/theming-card.png);
+      background-repeat: no-repeat;
+    background-position: right;
+    background-size: 80px;
+}
+
+@media(max-width: 990px){
+  .card{
+    margin: 20px;
+  }
+} 
+.lower {
+    margin-top: 50px;
+}
+
+/* .bg-color-main { background-image: url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw0PDQ0NDQ0NDQ0NDQ0NDQ0NDQ8IDQ0NFREWFhURExMYHSggGBolGxMTITEhJSkrLi4uFx8zODMsNygtLisBCgoKBQUFDgUFDisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIALcBEwMBIgACEQEDEQH/xAAZAAADAQEBAAAAAAAAAAAAAAAAAQIDBAf/xAAjEAEBAQEAAgIBBAMAAAAAAAAAAQIRIXExQWETUYHwscHx/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/APaAAB8LhynwEkrhACMAQAAwRgAAAAAAcAAcLiiAgYAgYAuAwA5CMARgAAAAAAAAAUNJgZykAXwrBnXF8BmS7E2ASaoAnpkAMyAGAAABAcMhKB8JQBIPhcAAAAAAAAAAAAAAAABNgPqbAUaZTA1Y1z0kA2sRYWN89NbAY2E0sTYCahYoIOUqAUaYYGVMARlYJQVKpBygZ8PhAmwmsnU3IIAAHBwlTyCQqxIAAAAmgAZQcBNnDlNOpwGkCJWkAl43z0kgdFnWdhY3z01vkGNiWlibATYiziysBJypvg4CumgwUVh9AFKadT9jlBedNOMlZ1z0Br+RzqecAtZRY2nlGsgzBkDTN74+y1lDXGu+L8gyoaayzsAqQoBMqpWcqpQUBKLATZz0eaabOA2nkcZZ02nkE2KxvnoWJsBtZ1Ficb56a2Ay4ldhAixFnGthWAiAWcAHD6k5QUmz7hmAzVIs+4rN6Cs656a/LI83gKsP5MrAZ6yhv8stQEgAGuNd8X5TrKGmdd8X5/yDO5C7DBzayUrXjPeQOVUrOVUoKoEooJsVjXP78kXAdM8+Z/xNjLG+ef7XROWdgMrFY3z0diLAa2IsLOuelUCn7Fciqzr6v8UGdiONtZRYCSo4YFKpFhygsvyOgGmb0+M/zGmb0Bm89NIjgl4CrC1O+1QrAYUm289YgYIwV+p+AkgEFghwGOsiVtrLHWQVKrrOVcA+EcFgJVjfCIHVLLOxNjLGrPhv2WdgMrBnXPSrE2AqppSmC8a+r/FGss2mNfV/igzsTWusosBMTZxR8BMVKmzgBRyplUDbNlgsZS8+G2dSgmXi5U2CXgHYz3ltE6gOY17yzAwQAQ4kwaZ8lrKY0ze+wc+siVvvLHWQOHKmUwFgVKnUAKxriDB0dl8xFRnXGnegmxPwqlQATT6DTOvqlYhXQIjoAfKdZ4bSeQYxUGs8SCzl4mGDfOuixjLxtjXQKXi02FLwD1GW8tk6gOek1sAJ1lDexGsgiHKQgN86l9p3hErbOu+wc2siVtvDGwDikHKBayTRGoAVm8RKYNfkkSrAkXwsAmU02c9HKCgUMAJeAA1nLP8ATLWeCVrLNT8gwNWs8QCjl4kwb5107GEvG2ddApeK+SsKXgJsC6AFiLCxvnppqAw1EtbEWARyphg3zrvtG8ojXOu+wYWCNNZZ2AZlDBGoTRGsgFSpALBQAaLOLAJik2HAMAABKADWXs/LPWRKvvQZGLCAzl4QBvnXRqMZeNs66CLAvgBgvG+fPwgA21Gdgzr6+lUGdhLsTQEBGC5e+06hK6CAdhAYABNhLTYANJwDMjAJ4oARkYAAAAACu9TQYEAABy8IA1/UhMwAAABWdAAdTQASYAAAAZAAIAAAABNhAAqAADAAAAAAAAAAAAAAAAAAAAA//9k=)} */
+        
+        /* .bg-color-main { background:rgb(230, 228, 228)}   styles is imported from base, this is hard-coded */
+    </style>
+</head>
+<body class="bg-color-main"> 
+
+
+<!-- could change to dark with navbar dark and bg-dark, or main-colors  -->
+<!-- 
+<div>
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="#">Todo App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home </a>
+                </li>
+
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item m-1">
+                    <a type="button" class="btn btn-outline-dark" href="#">Logout</a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+</div> -->
+
+
+
+<div>
+    <nav class="navbar-custom navbar navbar-expand-md navbar-light bg-light fixed-top">
+        <a class ="navbar-brand" href="#"> Todo App</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Users </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Users2 </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Users2 </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav link">
+                    <button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Login </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+
+<div class ="container lower" >
+    <div class ="card text-center ">
+        <div class="card-header main-colors">
+            <h4> Your projects</h4>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">List of projects</h5>
+            <p class="card-text"> Information regarding projects</p>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th> </th>
+                        <th scope="col">info</th> </th>
+                        <th scope="col">Actions</th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="pointer">
+                        <td>Value here</td>
+                        <td>also value here</td>
+                        <td>
+                            <button type="button", class="btn btn-success">Add</button>
+                            <button type="button", class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                    <tr class="pointer">
+                        <td>Value here</td>
+                        <td>also value here</td>
+                        <td>
+                            <button type="button", class="btn btn-success">Add</button>
+                            <button type="button", class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a class="btn btn-primary" href="#"> add new project</a>
+            
+        </div>
+    </div>
+
+</div>
+
+<!-- <div class="card-deck">
+    <div class="card">
+    <img src="https://eitrawmaterials.eu/wp-content/uploads/2019/10/KAVA7.jpg" class="card-img-top">
+    <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+    </div>
+    <div class="card">
+        <img src="https://eitrawmaterials.eu/wp-content/uploads/2019/10/KAVA7.jpg" class="card-img-top">
+    <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+    </div>
+    <div class="card">
+        <img src="https://eitrawmaterials.eu/wp-content/uploads/2019/10/KAVA7.jpg" class="card-img-top">
+    <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+    </div>
+</div> -->
+
+
+<div class="container lower">
+  <div class="row">
+    <div class="col-md-4">
+        <a class="btn" href="#">
+          <div class="card card-1">
+            <h3>Prosjekt</h3>
+            <p>Oppdragsnr 5206156</p> 
+            <p>E6 Korporalsbrua-Kvål</p>
+            <p>789/1500 timer brukt</p>
+          </div>
+        </a>
+    </div>
+    <div class="col-md-4">
+    <a class="btn" href="#">
+      <div class="card card-1">
+        <h3>Prosjekt</h3>
+        <p>Oppdragsnr 52062156</p> 
+        <p>Kvislabakken boligfelt</p>
+        <p>32/50 timer brukt</p>
+      </div>
+    </a>
+    </div>
+    <div class="col-md-4">
+        <a class="btn" href="#">
+          <div class="card card-1">
+            <h3>Prosjekt</h3>
+            <p>Oppdragsnr 5213156</p> 
+            <p>IC tønski</p>
+            <p>1920/2500 timer brukt</p>
+          </div>
+        </a>
+    </div>
+</div>
+<script src="{{url_for('static',path='/todo/js/jquery-slim.js')}}"></script>
+<script src="{{url_for('static',path='/todo/js/popper.js')}}"></script>
+<script src="{{url_for('static',path='/todo/js/bootstrap.js')}}"></script>
+</body>
+</html>

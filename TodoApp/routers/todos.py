@@ -6,13 +6,13 @@ from fastapi import APIRouter,Depends,HTTPException,Request
 from database import engine,SessionLocal
 import models
 from sqlalchemy.orm import Session
-from pydantic import BaseModel,Field
+from pydantic import BaseModel,Field,ValidationError, validator
 from typing import Optional
 from .auth import get_current_user,get_user_exception
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
-router=APIRouter(prefix="/todos",tags=["todo"],responses={404:{"Description":"Not found"}})
+router=APIRouter(prefix="/todos",tags=["todos"],responses={404:{"Description":"Not found"}})
 
 models.Base.metadata.create_all(bind=engine)
 templates=Jinja2Templates(directory="templates")
@@ -35,7 +35,6 @@ class Todo(BaseModel):
 @router.get("/test")
 async def test(request:Request):
     return templates.TemplateResponse("home.html", {"request":request})
-
 
 
 @router.get("/")
@@ -148,3 +147,5 @@ def successfulResponse():
 def HTTPExceptionRespons():
     HTTPException(status_code=404,detail="Could not find todo")
     
+
+     

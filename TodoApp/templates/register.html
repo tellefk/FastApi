@@ -1,0 +1,53 @@
+
+{% include 'layout.html' %}
+<div class="container lower">
+    <div class="card">
+        <div class="card-header">
+            register
+        </div>
+        <div class="card-body">
+            {%if msg %}
+            {% if msg=='Logout Sucessfull' or msg=='User successfully created'%}
+            <div class="alert alert-success" role="alert"> {{msg}}</div>
+            {% else %}
+            <div class="alert alert-danger" role="alert"> {{msg}}</div>
+            {% endif %}
+            {% endif %}
+            <form method="POST" action="/auth/register">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>email</label>
+                        <input type="text" class="form-control" name="email" required >
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>username</label>
+                        <input type="text" class="form-control" name="username" required >
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>firstname</label>
+                        <input type="text" class="form-control" name="firstname" required >
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>lastname</label>
+                        <input type="text" class="form-control" name="lastname" required >
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label>Password</label>
+                    <input type="password" class="form-control" name="password" required >
+                </div>
+                <div class="form-row">
+                    <label>Verify password</label>
+                    <input type="password" class="form-control" name="password2" required >
+                </div>
+                <button class="btn btn-primary lower" type="submit"> Sign in</button>
+                <div class="form-footer">
+                    <a href="#">Already have a account?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

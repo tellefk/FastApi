@@ -89,7 +89,31 @@ CREATE TABLE todo (
 	FOREIGN KEY (owner_id) REFERENCES users(id) 
 );
 
+DROP TABLE IF EXISTS users;
 
+CREATE TABLE users (
+	id SERIAL,
+	Email varchar(200) DEFAULT NULL UNIQUE,
+	username varchar(45) DEFAULT NUll UNIQUE,
+	first_name varchar(45) DEFAULT NUll,
+	last_name varchar(45) DEFAULT NUll,
+	hashed_password varchar(200) DEFAULT NUll,
+	is_active boolean DEFAULT NULL,
+	PRIMARY KEY(id)
+);
+
+DROP TABLE IF EXISTS todo;
+
+CREATE TABLE todo (
+	id SERIAL,
+	title varchar(200) DEFAULT NULL,
+	description varchar(45) DEFAULT NUll,
+	priority integer DEFAULT NUll,
+	complete boolean DEFAULT NUll,
+	owner_id integer DEFAULT NULL,
+	PRIMARY KEY(id),
+	FOREIGN KEY (owner_id) REFERENCES users(id) 
+);
 
 ALEMBIC
 
@@ -158,4 +182,14 @@ ALTER TABLE users ADD UNIQUE (email);
 addes egt av seg selv  får feilrespons 500 hvis det ikke går, kan ta endre til en annen respons 
 
 conda env create -f fastapi.yml.
+
+conda create --name FastApiEnv python=3.9
+conda install --file requirements.txt
+
+
+Alter table users add unique (email);
+
+pip install "passlib[bcrypt]"
+pip install "python-jose[cryptography"]
+pip install python-multipart
 """

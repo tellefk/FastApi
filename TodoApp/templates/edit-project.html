@@ -1,0 +1,35 @@
+{% include 'layout.html' %}
+<div class="container lower">
+    <div class="card">
+        <div class="card-header">
+            Edit project
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control" name="title" value="{{prosjektTest.title}}" required >
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea type="text" class="form-control" rows=5 name="description" required >{{prosjektTest.description}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Priority</label>
+                    <select class="form-control" name="priority" required >
+                        <option {% if prosjektTest.priority ==1%} selected="selected" {% endif %}>1</option>
+                        <option {% if prosjektTest.priority ==2%} selected="selected" {% endif %}>2</option>
+                        <option {% if prosjektTest.priority ==3%} selected="selected" {% endif %}>3</option>
+                        <option {% if prosjektTest.priority ==4%} selected="selected" {% endif %}>4</option>
+                        <option {% if prosjektTest.priority ==5%} selected="selected" {% endif %}>5</option>
+
+                    </select>
+                </div>
+                <button class="btn btn-primary" type="submit"> Edit project</button>
+                <button onclick="window.location.href='/projects/delete/{{prosjektTest.id}}'"
+                        type="button" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+
