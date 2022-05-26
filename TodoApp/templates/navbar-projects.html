@@ -8,7 +8,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="projects">Home </a>
+                    <a class="nav-link" href="/projects">Home </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Projects </a>
@@ -18,11 +18,11 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
+                {% if user %}
                 <li class="nav-item m-1">
-                    {% if user %}
-                    <a type="button" class="btn btn-outline-dark" href="/auth">Logout</a>
-                    {% endif%}
+                    <a type="button" class="btn btn-outline-dark" href="/auth/logout">Logout</a>
                 </li>
+                {% endif%}
             </ul>
         </div>
     </nav>

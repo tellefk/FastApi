@@ -18,7 +18,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
 
-router=APIRouter(prefix="/projects",tags=["todos"],responses={404:{"Description":"Not found"}})
+router=APIRouter(prefix="/projects",tags=["Prosjekt"],responses={404:{"Description":"Not found"}})
 
 models.Base.metadata.create_all(bind=engine)
 templates=Jinja2Templates(directory="templates")
@@ -91,8 +91,8 @@ async def delete_projects(request:Request,project_id:str,db:Session=Depends(get_
     user=await get_current_user_cookie(request)
     if user is None:
         return RedirectResponse(url="/auth",status_code=status.HTTP_302_FOUND)
-    db.query(models.Todos).filter(models.Todos.id==project_id).filter(models.Todos.owner_id==user.get("id")).first()
-    if project_id is None:
+    project_data=db.query(models.Todos).filter(models.Todos.id==project_id).filter(models.Todos.owner_id==user.get("id")).first()
+    if project_data is None:
          return RedirectResponse(url="/projects",status_code=status.HTTP_302_FOUND)
     db.query(models.Todos).filter(models.Todos.id==project_id).delete()
     db.commit()
@@ -104,5 +104,7 @@ async def get_project(request:Request,project_id:int,db:Session=Depends(get_db))
     user=await get_current_user_cookie(request)
     if user is None:
         return RedirectResponse(url="/auth",status_code=status.HTTP_302_FOUND)
-    project=db.query(models.Todos).filter(models.Todos.id==project_id).first()
-    return templates.TemplateResponse("projects.html",{"request":request,"prosjektTest":project,"user":user})
+    project_data=db.query(models.Todos).filter(models.Todos.id==project_id).filter(models.Todos.owner_id==user.get("id")).first()
+    if project_data is None:
+        return RedirectResponse(url="/projects",status_code=status.HTTP_302_FOUND)
+    return templates.TemplateResponse("projects.html",{"request":request,"prosjektTest":project_data,"user":user})

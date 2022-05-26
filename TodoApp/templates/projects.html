@@ -105,36 +105,7 @@
 </div> -->
 
 
-
-<div>
-    <nav class="navbar-custom navbar navbar-expand-md navbar-light bg-light fixed-top">
-        <a class ="navbar-brand" href="#"> Todo App</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Users </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Users2 </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Users2 </a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav link">
-                    <button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Login </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</div>
-
+{% include 'layout.html'%}
 
 <div class ="container lower" >
     <div class ="card text-center ">
@@ -209,9 +180,9 @@
 <div class="container lower">
   <div class="row">
     <div class="col-md-4">
-        <a class="btn" href="#">
+        <a class="btn" href="https://norspunt.azurewebsites.net/">
           <div class="card card-1">
-            <h3>Prosjekt</h3>
+            <h3>Spuntberegning</h3>
             <p>Oppdragsnr 5206156</p> 
             <p>E6 Korporalsbrua-Kvål</p>
             <p>789/1500 timer brukt</p>
@@ -219,15 +190,18 @@
         </a>
     </div>
     <div class="col-md-4">
-    <a class="btn" href="#">
+    <a class="btn" href="https://geotolk.norconsult.com/">
+        {% if prosjektTest %}
       <div class="card card-1">
-        <h3>Prosjekt</h3>
-        <p>Oppdragsnr 52062156</p> 
+        <h3>Geotolk</h3>
+        <p>Lagdeling for {{prosjektTest.title}}</p> 
         <p>Kvislabakken boligfelt</p>
-        <p>32/50 timer brukt</p>
+        <p>30 Totalsonderinger og 5 CPT</p>
+        {% endif%}
       </div>
     </a>
     </div>
+
     <div class="col-md-4">
         <a class="btn" href="#">
           <div class="card card-1">

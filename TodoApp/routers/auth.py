@@ -1,4 +1,5 @@
 import sys
+from tkinter import NONE
 sys.path.append("..")
 
 
@@ -156,16 +157,16 @@ async def create_user(create_user:CreateUser,db:Session=Depends(get_db)):
     db.commit()
     return {"user_added":"Sucessfully added user"}
 
-
-# @router.post("/token")
-# async def login_for_access_token(form_data:OAuth2PasswordRequestForm=Depends(),db:Session=Depends(get_db)):
-#     user=authenticate_user(form_data.username,form_data.password,db)
-#     if not user:
-#         #raise HTTPException(status_code=404,detail="User not found")
-#         raise token_exceptions()
-#     token_expires=timedelta(minutes=20)
-#     token=create_access_token(user.username,user.id,expires_delta=token_expires)
-#     return {"token":token}
+"""for rest apis"""
+@router.post("/Token")
+async def login_for_access_token(form_data:OAuth2PasswordRequestForm=Depends(),db:Session=Depends(get_db)):
+    user=authenticate_user(form_data.username,form_data.password,db)
+    if not user:
+        #raise HTTPException(status_code=404,detail="User not found")
+        raise token_exceptions()
+    token_expires=timedelta(minutes=20)
+    token=create_access_token(user.username,user.id,expires_delta=token_expires)
+    return {"token":token}
 
 
 
@@ -214,10 +215,10 @@ async def login(request:Request,db:Session=Depends(get_db)):
         msg=f"erorr {e}"
         return templates.TemplateResponse("login.html",{"request":request,"msg":msg})
 
-@router.post("/logout",response_class=HTMLResponse)
+@router.get("/logout",response_class=HTMLResponse)
 async def logout(request:Request):
     msg="Logout Sucessfull"
-    response=templates.TemplateResponse("logout.html",{"request":request,"msg":msg})
+    response=templates.TemplateResponse("login.html",{"request":request,"msg":msg})
     response.delete_cookie(key="access_token")
     return response
 
@@ -256,8 +257,9 @@ async def login_for_access_token_cookie(response:Response,form_data:OAuth2Passwo
     token_expires=timedelta(minutes=60)
     token=create_access_token(user.username,user.id,expires_delta=token_expires)
     response.set_cookie(key="access_token",value=token,httponly=True)
-    return True
+    return response
 
+@router.get("/validateCookie")
 async def get_current_user_cookie(request:Request):
     try:
         token=request.cookies.get("access_token")
@@ -271,7 +273,7 @@ async def get_current_user_cookie(request:Request):
         else:
             return {"username":username,"id":user_id}
     except JWTError:
-        raise get_user_exception()
+        return None
 
 
 
