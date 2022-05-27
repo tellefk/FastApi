@@ -1,3 +1,4 @@
+from git import refresh
 import streamlit as st
 import requests
 import json 
@@ -17,13 +18,18 @@ def login(nr):
             st.title(f"Login")
             username=st.text_input(label="username",placeholder="Username")
             password=st.text_input(label="password",placeholder="password",type="password")
-            submit=st.form_submit_button("Login")
+            col__=st.columns(6)
+            with col__[0]:
+                submit=st.form_submit_button("Login")
+            with col__[1]:
+                st.write("[Register?](http://127.0.0.1:8000/auth/register)")
             token=None
             if submit:
                 data = {'username': username, 'password': password}
                 response = requests.post(api_url, data=data)
-                token=json.loads(response.content)["token"]
-                headers =  {"Content-Type":"application/json", "Authorization": f"Bearer {token}"}
+                if response.status_code==200:
+                    token=json.loads(response.content)["token"]
+                    headers =  {"Content-Type":"application/json", "Authorization": f"Bearer {token}"}
                 if token is not None:
                     st.session_state["headers"]=headers
                     st.session_state["token"]=token
@@ -47,15 +53,29 @@ def velg_prosjekt():
 
 def main():
     # button_=st.button("Read from database")
-    # if button_:
-    r=requests.get(url2,headers=st.session_state["headers"])
-    result=json.loads(r.content)
-    lag_p=st.checkbox("Lag nytt prosjekt")
-    if lag_p:
-        st.write("Lag prosjekt form som poster til db")
+    # if button_
+    refresh=st.button("Refresh")
+    if refresh:
+        r=requests.get(url2,headers=st.session_state["headers"])
+        result=json.loads(r.content)
+    try:
+        r=requests.get(url2,headers=st.session_state["headers"])
+        result=json.loads(r.content)
+    except:
+        st.warning("Token invalid, need to relog")
+        st.session_state["login"]=False
+        st.session_state["Prosjekt"]= None 
+        st.experimental_rerun()
+    # lag_p=st.checkbox("Lag nytt prosjekt")
+    # if lag_p:
+
     with st.form("velgProsjekt"):
         velg_prosjekt=st.selectbox(options=([prosjekt["title"] for prosjekt in result]),label="Velg prosjekt")
-        velg_prosjekt_knapp=st.form_submit_button("Velg prosjekt")
+        col_=st.columns(2)
+        with col_[0]:
+            velg_prosjekt_knapp=st.form_submit_button("Velg prosjekt")
+        with col_[1]:
+            st.write("[Legg til prosjekt](http://127.0.0.1:8000/projects/add-project)")
         if velg_prosjekt_knapp:
             velg_prosjekt
             st.session_state["Prosjekt"]=velg_prosjekt
@@ -69,12 +89,18 @@ def main2():
     tt=st.sidebar.button(label="Velg nytt prosjekt")
     if log:
         st.session_state["login"]=False
+        st.session_state["Prosjekt"]= None 
+        # if this is not set to none, it will remember prosject when logged out: can be nice  with validate token/cookie 
         st.experimental_rerun()
         #Test if validate_cookie har expierd, if set login to false og rerun
     if tt:
         st.session_state["Prosjekt"]=None
         st.experimental_rerun()
     st.write("Insert norspunt app()")
+    p=st.slider("pick a number",1,100)
+    pp=st.number_input(label="pick a number ")
+    st.write(p*pp/3.4151)
+    
 
 if __name__ == "__main__":
     login(0)

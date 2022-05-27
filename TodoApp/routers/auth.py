@@ -183,6 +183,8 @@ def token_exceptions():
     return token_exceptions_respons
 
 
+""" Under er brukt for fullstack med prosjekt.py med JINJA  istedet for todos.py som kun er standard restAPI brukt i js-frameworks etc """
+
 class LoginForm:
     def __init__(self,request:Request):
         self.request:Request=request

@@ -77,7 +77,7 @@ async def add_projects(request:Request,project_id:str,title:str=Form(...),descri
     user=await get_current_user_cookie(request)
     if user is None:
         return RedirectResponse(url="/auth",status_code=status.HTTP_302_FOUND)
-    project=db.query(models.Todos).filter(models.Todos.id==project_id).first()
+    project=db.query(models.Todos).filter(models.Todos.id==project_id).first() # or db.query(models.Todos).filter(models.Todos.id==project_id).first()
     project.priority=priority
     project.title=title
     project.description=description
